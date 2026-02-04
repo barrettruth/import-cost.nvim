@@ -1,4 +1,5 @@
 /import-cost/
 doc/tags
-vim.toml
-selene.toml
+.*cache*
+CLAUDE.md
+.claude/
