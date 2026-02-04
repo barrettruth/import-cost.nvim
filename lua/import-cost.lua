@@ -1,89 +1,143 @@
 local M = {}
 
-local function is_ic_buf(bufnr)
-    local ok, filetype = pcall(vim.api.nvim_buf_get_option, bufnr, 'filetype')
+local initialized = false
+local attached_bufs = {}
 
-    if not ok then
-        return false
-    end
-
-    return vim.tbl_contains(M.config.filetypes, filetype)
-end
-
-local function au(events, cb)
-    vim.api.nvim_create_autocmd(events, {
-        callback = function(opts)
-            if is_ic_buf(opts.buf) then
-                cb(opts.buf)
-            end
-        end,
-        group = M.aug_id,
-    })
-end
-
-M.config = {
-    filetypes = {
-        'javascript',
-        'javascriptreact',
-        'typescript',
-        'typescriptreact',
-        'svelte'
-    },
-    format = {
-        byte_format = '%.1fb',
-        kb_format = '%.1fk',
-        virtual_text = '%s (gzipped: %s)',
-    },
-    highlight = 'Comment',
+local defaults = {
+  filetypes = {
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+    'svelte',
+  },
+  format = {
+    byte_format = '%.1fb',
+    kb_format = '%.1fk',
+    virtual_text = '%s (gzipped: %s)',
+  },
+  highlight = 'Comment',
 }
 
-M.setup = function(user_config)
-    M.script_path = vim.fn.fnamemodify(debug.getinfo(1).source:sub(2), ':h:h')
-        .. '/import-cost/index.js'
+local config = vim.deepcopy(defaults)
+local ns_id = nil
+local aug_id = nil
+local script_path = nil
 
-    if not vim.loop.fs_stat(M.script_path) then
-        vim.notify_once(
-            string.format(
-                'import-cost.nvim: Failed to load script at %s. Ensure the plugin is properly installed.',
-                M.script_path
-            ),
-            vim.log.levels.ERROR
-        )
-        return
-    end
+local function init()
+  if initialized then
+    return true
+  end
 
-    M.config = vim.tbl_deep_extend('force', M.config, user_config or {})
+  script_path = vim.fn.fnamemodify(debug.getinfo(1).source:sub(2), ':h:h') .. '/import-cost/index.js'
 
-    M.ns_id = vim.api.nvim_create_namespace 'ImportCost'
-
-    vim.api.nvim_set_hl(
-        0,
-        'ImportCostVirtualText',
-        ---@diagnostic disable-next-line: param-type-mismatch
-        type(M.config.highlight) == 'string' and { link = M.config.highlight }
-            or M.config.highlight
+  if not vim.loop.fs_stat(script_path) then
+    vim.notify_once(
+      string.format('import-cost.nvim: Failed to load script at %s. Ensure the plugin is properly installed.', script_path),
+      vim.log.levels.ERROR
     )
+    return false
+  end
 
-    M.aug_id = vim.api.nvim_create_augroup('ImportCost', {})
+  local user_config = vim.g.import_cost or {}
+  config = vim.tbl_deep_extend('force', defaults, user_config)
 
-    local extmark = require 'import-cost.extmark'
+  ns_id = vim.api.nvim_create_namespace('ImportCost')
+  aug_id = vim.api.nvim_create_augroup('ImportCost', {})
 
-    au('BufEnter', function(bufnr)
-        extmark.set_extmarks(bufnr)
-    end)
+  vim.api.nvim_set_hl(
+    0,
+    'ImportCostVirtualText',
+    type(config.highlight) == 'string' and { link = config.highlight } or config.highlight
+  )
 
-    au('InsertEnter', function(bufnr)
-        extmark.delete_extmarks(bufnr)
-    end)
+  initialized = true
+  return true
+end
 
-    au('InsertLeave', function(bufnr)
-        extmark.set_extmarks(bufnr)
-    end)
+local function is_supported_filetype(bufnr)
+  local ok, ft = pcall(vim.api.nvim_get_option_value, 'filetype', { buf = bufnr })
+  if not ok then
+    return false
+  end
+  return vim.tbl_contains(config.filetypes, ft)
+end
 
-    au('TextChanged', function(bufnr)
-        extmark.delete_extmarks(bufnr)
-        extmark.set_extmarks(bufnr)
-    end)
+function M.attach(bufnr)
+  if not init() then
+    return
+  end
+
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
+
+  if attached_bufs[bufnr] then
+    return
+  end
+
+  if not is_supported_filetype(bufnr) then
+    return
+  end
+
+  attached_bufs[bufnr] = true
+
+  local extmark = require('import-cost.extmark')
+
+  extmark.set_extmarks(bufnr)
+
+  vim.api.nvim_create_autocmd('BufEnter', {
+    buffer = bufnr,
+    group = aug_id,
+    callback = function()
+      extmark.set_extmarks(bufnr)
+    end,
+  })
+
+  vim.api.nvim_create_autocmd('InsertEnter', {
+    buffer = bufnr,
+    group = aug_id,
+    callback = function()
+      extmark.delete_extmarks(bufnr)
+    end,
+  })
+
+  vim.api.nvim_create_autocmd('InsertLeave', {
+    buffer = bufnr,
+    group = aug_id,
+    callback = function()
+      extmark.set_extmarks(bufnr)
+    end,
+  })
+
+  vim.api.nvim_create_autocmd('TextChanged', {
+    buffer = bufnr,
+    group = aug_id,
+    callback = function()
+      extmark.delete_extmarks(bufnr)
+      extmark.set_extmarks(bufnr)
+    end,
+  })
+
+  vim.api.nvim_create_autocmd('BufWipeout', {
+    buffer = bufnr,
+    group = aug_id,
+    callback = function()
+      attached_bufs[bufnr] = nil
+    end,
+  })
+end
+
+function M.get_config()
+  return config
+end
+
+function M.get_ns_id()
+  init()
+  return ns_id
+end
+
+function M.get_script_path()
+  init()
+  return script_path
 end
 
 return M

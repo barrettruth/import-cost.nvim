@@ -1,7 +1,8 @@
 local M = {}
 
-local ic, job, util =
-    require 'import-cost', require 'import-cost.job', require 'import-cost.util'
+local ic = require('import-cost')
+local job = require('import-cost.job')
+local util = require('import-cost.util')
 
 local cache = {}
 
@@ -28,9 +29,9 @@ end
 
 function M.set_extmarks(bufnr)
     local path = vim.api.nvim_buf_get_name(bufnr)
-    local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+    local filetype = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
 
-    local cmd = { 'node', ic.script_path, path, filetype }
+    local cmd = { 'node', ic.get_script_path(), path, filetype }
 
     local job_id = vim.fn.jobstart(cmd, {
         on_stdout = function(_, stdout, _)
@@ -59,7 +60,7 @@ function M.clear_extmarks(bufnr)
         cache[bufnr] = nil
     end
 
-    vim.api.nvim_buf_clear_namespace(bufnr, ic.ns_id, 0, -1)
+    vim.api.nvim_buf_clear_namespace(bufnr, ic.get_ns_id(), 0, -1)
 end
 
 function M.delete_extmarks(bufnr)
@@ -83,7 +84,7 @@ function M.delete_extmarks(bufnr)
         then
             goto continue
         else
-            vim.api.nvim_buf_del_extmark(bufnr, ic.ns_id, data.extmark_id)
+            vim.api.nvim_buf_del_extmark(bufnr, ic.get_ns_id(), data.extmark_id)
             cache[bufnr][string] = nil
         end
 
