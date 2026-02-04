@@ -103,7 +103,7 @@ end
 
 ---@deprecated Use `vim.g.import_cost` instead
 M.setup = function(user_config)
-    vim.deprecate('require("import-cost").setup()', 'vim.g.import_cost', 'v0.1.0', 'import-cost.nvim')
+    vim.deprecate('require("import-cost").setup()', 'vim.g.import_cost', 'v0.1.0', 'import-cost.nvim', false)
 
     if user_config then
         vim.g.import_cost = vim.tbl_deep_extend('force', vim.g.import_cost or {}, user_config)
