@@ -25,7 +25,8 @@ M.aug_id = nil
 M.script_path = nil
 
 local function is_ic_buf(bufnr)
-    local ok, filetype = pcall(vim.api.nvim_get_option_value, 'filetype', { buf = bufnr })
+    local ok, filetype =
+        pcall(vim.api.nvim_get_option_value, 'filetype', { buf = bufnr })
 
     if not ok then
         return false
@@ -67,7 +68,7 @@ local function init()
     local user_config = vim.g.import_cost or {}
     M.config = vim.tbl_deep_extend('force', M.config, user_config)
 
-    M.ns_id = vim.api.nvim_create_namespace('ImportCost')
+    M.ns_id = vim.api.nvim_create_namespace 'ImportCost'
     M.aug_id = vim.api.nvim_create_augroup('ImportCost', {})
 
     vim.api.nvim_set_hl(
@@ -78,7 +79,7 @@ local function init()
             or M.config.highlight
     )
 
-    local extmark = require('import-cost.extmark')
+    local extmark = require 'import-cost.extmark'
 
     au('BufEnter', function(bufnr)
         extmark.set_extmarks(bufnr)
@@ -103,10 +104,17 @@ end
 
 ---@deprecated Use `vim.g.import_cost` instead
 M.setup = function(user_config)
-    vim.deprecate('require("import-cost").setup()', 'vim.g.import_cost', 'v0.1.0', 'import-cost.nvim', false)
+    vim.deprecate(
+        'require("import-cost").setup()',
+        'vim.g.import_cost',
+        'v0.1.0',
+        'import-cost.nvim',
+        false
+    )
 
     if user_config then
-        vim.g.import_cost = vim.tbl_deep_extend('force', vim.g.import_cost or {}, user_config)
+        vim.g.import_cost =
+            vim.tbl_deep_extend('force', vim.g.import_cost or {}, user_config)
     end
 
     init()
@@ -129,7 +137,7 @@ function M.attach(bufnr)
 
     attached_bufs[bufnr] = true
 
-    local extmark = require('import-cost.extmark')
+    local extmark = require 'import-cost.extmark'
     extmark.set_extmarks(bufnr)
 
     vim.api.nvim_create_autocmd('BufWipeout', {
