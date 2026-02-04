@@ -1,25 +1,25 @@
 local M = {}
 
-local ic = require 'import-cost'
-local format = ic.config.format
+local ic = require('import-cost')
 
 local job_cache = {}
 
-local format_bytes = function(bytes)
+local function format_bytes(bytes)
+    local format = ic.get_config().format
     if bytes < 1024 then
         return string.format(format.byte_format, bytes)
     end
-
     return string.format(format.kb_format, 0.0009765625 * bytes)
 end
 
 function M.render_extmark(bufnr, data, extmark_id)
+    local format = ic.get_config().format
     local line, size, gzip =
         data.line - 1, format_bytes(data.size), format_bytes(data.gzip)
 
     local virt_text = string.format(format.virtual_text, size, gzip)
 
-    return vim.api.nvim_buf_set_extmark(bufnr, ic.ns_id, line, -1, {
+    return vim.api.nvim_buf_set_extmark(bufnr, ic.get_ns_id(), line, -1, {
         id = extmark_id,
         virt_text = {
             {
