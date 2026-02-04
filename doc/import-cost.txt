@@ -7,16 +7,22 @@ Homepage: <https://github.com/barrett-ruth/import-cost.nvim>
 INTRODUCTION                                                 *import-cost.nvim*
 
 import-cost.nvim displays the costs of javascript imports inside neovim.
-It works with ES6 and CommonJS modules in any javascript, javascriptreact,
+It works with ES6 and CommonJS modules in javascript, javascriptreact,
 typescript, typescriptreact, or svelte files.
 
+Dependencies are installed automatically on first use.
+
 ===============================================================================
-CONFIGURATION                                           *vim.g.import_cost*
+CONFIGURATION                                             *vim.g.import_cost*
 
 Configure import-cost via the `vim.g.import_cost` global:
 
 >lua
     vim.g.import_cost = {
+        -- Node package manager for installing dependencies
+        -- Options: 'npm', 'yarn', 'bun' (pnpm not supported)
+        package_manager = 'npm',
+
         -- Filetypes to attach to
         filetypes = {
             'javascript',
@@ -25,6 +31,7 @@ Configure import-cost via the `vim.g.import_cost` global:
             'typescriptreact',
             'svelte',
         },
+
         format = {
             -- Format string for bytes/kilobytes in virtual text
             byte_format = '%.1fb',
@@ -32,6 +39,7 @@ Configure import-cost via the `vim.g.import_cost` global:
             -- Virtual text format (remove second "%s" to ignore gzipped size)
             virtual_text = '%s (gzipped: %s)',
         },
+
         -- Highlight of virtual text —
         -- a highlight group to link to or table as specified by nvim_set_hl()
         highlight = 'Comment',
