@@ -1,10 +1,9 @@
 ---
 name: Bug Report
 about: File a bug with import-cost.nvim
-title: 'Bug Report'
-labels: ''
-assignees: ''
-
+title: "Bug Report"
+labels: ""
+assignees: ""
 ---
 
 <!-- Be sure you can affirm the following: -->
@@ -42,4 +41,5 @@ require('nvim-package-manager').setup {
 </details>
 
 ### Description
+
 <!-- A clear and concise description of the bug -->
