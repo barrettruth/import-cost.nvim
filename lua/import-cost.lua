@@ -182,7 +182,6 @@ M.setup = function(user_config)
 
 Before:
   require('import-cost').setup({ ... })
-  build = 'sh scripts/install.sh yarn'
 
 After:
   vim.g.import_cost = {
@@ -190,7 +189,7 @@ After:
     -- ... other options
   }
 
-Dependencies now install automatically. Remove the `build` option.]],
+Dependencies now install automatically on first use.]],
     vim.log.levels.WARN
   )
 
