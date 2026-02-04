@@ -177,6 +177,23 @@ M.setup = function(user_config)
     false
   )
 
+  vim.notify_once(
+    [[import-cost.nvim: Migration required
+
+Before:
+  require('import-cost').setup({ ... })
+  build = 'sh scripts/install.sh yarn'
+
+After:
+  vim.g.import_cost = {
+    package_manager = 'yarn',  -- npm, yarn, or bun
+    -- ... other options
+  }
+
+Dependencies now install automatically. Remove the `build` option.]],
+    vim.log.levels.WARN
+  )
+
   if user_config then
     vim.g.import_cost = vim.tbl_deep_extend('force', vim.g.import_cost or {}, user_config)
   end
