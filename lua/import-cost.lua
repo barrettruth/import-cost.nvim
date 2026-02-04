@@ -1,10 +1,28 @@
+---@class import-cost.Format
+---@field byte_format string
+---@field kb_format string
+---@field virtual_text string
+
+---@class import-cost.Config
+---@field package_manager string
+---@field filetypes string[]
+---@field format import-cost.Format
+---@field highlight string|table
+
 local M = {}
 
+local util = require('import-cost.util')
+
+---@type boolean
 local initialized = false
+---@type boolean
 local building = false
+---@type table<integer, boolean>
 local attached_bufs = {}
+---@type integer[]
 local pending_bufs = {}
 
+---@type import-cost.Config
 local defaults = {
   package_manager = 'npm',
   filetypes = {
@@ -22,13 +40,19 @@ local defaults = {
   highlight = 'Comment',
 }
 
+---@type import-cost.Config
 M.config = vim.deepcopy(defaults)
+---@type integer?
 M.ns_id = nil
+---@type integer?
 M.aug_id = nil
+---@type string?
 M.script_path = nil
 
 local plugin_dir = vim.fn.fnamemodify(debug.getinfo(1).source:sub(2), ':h:h')
 
+---@param bufnr integer
+---@return boolean
 local function is_ic_buf(bufnr)
   local ok, filetype = pcall(vim.api.nvim_get_option_value, 'filetype', { buf = bufnr })
   if not ok then
@@ -37,6 +61,8 @@ local function is_ic_buf(bufnr)
   return vim.tbl_contains(M.config.filetypes, filetype)
 end
 
+---@param events string|string[]
+---@param cb fun(bufnr: integer)
 local function au(events, cb)
   vim.api.nvim_create_autocmd(events, {
     callback = function(opts)
@@ -48,6 +74,7 @@ local function au(events, cb)
   })
 end
 
+---@return nil
 local function setup_autocmds()
   local extmark = require('import-cost.extmark')
 
@@ -69,6 +96,7 @@ local function setup_autocmds()
   end)
 end
 
+---@return nil
 local function finish_init()
   M.ns_id = vim.api.nvim_create_namespace('ImportCost')
   M.aug_id = vim.api.nvim_create_augroup('ImportCost', {})
@@ -89,6 +117,8 @@ local function finish_init()
   pending_bufs = {}
 end
 
+---@param on_complete? fun()
+---@return nil
 local function build(on_complete)
   if building then
     return
@@ -98,13 +128,14 @@ local function build(on_complete)
   local import_cost_dir = plugin_dir .. '/import-cost'
   local pm = M.config.package_manager
 
-  vim.notify('import-cost.nvim: Building (first run)...', vim.log.levels.INFO)
+  util.log('building...')
 
+  ---@return nil
   local function install_deps()
     vim.system({ pm, 'install' }, { cwd = import_cost_dir }, function(result)
       vim.schedule(function()
         if result.code ~= 0 then
-          vim.notify('import-cost.nvim: Failed to install dependencies', vim.log.levels.ERROR)
+          util.log('failed to install dependencies', vim.log.levels.ERROR)
           building = false
           return
         end
@@ -115,9 +146,9 @@ local function build(on_complete)
           vim.schedule(function()
             building = false
             if err then
-              vim.notify('import-cost.nvim: Failed to copy index.js', vim.log.levels.ERROR)
+              util.log('failed to copy index.js', vim.log.levels.ERROR)
             else
-              vim.notify('import-cost.nvim: Ready', vim.log.levels.INFO)
+              util.log('ready')
               if on_complete then
                 on_complete()
               end
@@ -135,7 +166,7 @@ local function build(on_complete)
       function(result)
         vim.schedule(function()
           if result.code ~= 0 then
-            vim.notify('import-cost.nvim: Failed to clone wix/import-cost', vim.log.levels.ERROR)
+            util.log('failed to clone wix/import-cost', vim.log.levels.ERROR)
             building = false
             return
           end
@@ -148,6 +179,7 @@ local function build(on_complete)
   end
 end
 
+---@return boolean
 local function init()
   if initialized then
     return true
@@ -168,6 +200,7 @@ local function init()
 end
 
 ---@deprecated Use `vim.g.import_cost` instead
+---@param user_config? import-cost.Config
 M.setup = function(user_config)
   vim.deprecate(
     'require("import-cost").setup()',
@@ -177,8 +210,7 @@ M.setup = function(user_config)
     false
   )
 
-  vim.notify_once(
-    [[import-cost.nvim: Migration required
+  util.log([[migration required
 
 Before:
   require('import-cost').setup({ ... })
@@ -189,9 +221,7 @@ After:
     -- ... other options
   }
 
-Dependencies now install automatically on first use.]],
-    vim.log.levels.WARN
-  )
+Dependencies now install automatically on first use.]], vim.log.levels.WARN)
 
   if user_config then
     vim.g.import_cost = vim.tbl_deep_extend('force', vim.g.import_cost or {}, user_config)
@@ -200,6 +230,7 @@ Dependencies now install automatically on first use.]],
   init()
 end
 
+---@param bufnr? integer
 function M.attach(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
 
