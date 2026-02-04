@@ -68,26 +68,19 @@ function M.delete_extmarks(bufnr)
     end
 
     for string, data in pairs(cache[bufnr]) do
-        if
-            string
-            == util.normalize_string(
-                vim.api.nvim_buf_get_text(
-                    bufnr,
-                    data.line - 1,
-                    0,
-                    data.line - 1,
-                    -1,
-                    {}
-                )[1]
-            )
-        then
-            goto continue
-        else
+        local current_line = vim.api.nvim_buf_get_text(
+            bufnr,
+            data.line - 1,
+            0,
+            data.line - 1,
+            -1,
+            {}
+        )[1]
+
+        if string ~= util.normalize_string(current_line) then
             vim.api.nvim_buf_del_extmark(bufnr, ic.ns_id, data.extmark_id)
             cache[bufnr][string] = nil
         end
-
-        ::continue::
     end
 end
 
