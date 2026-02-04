@@ -210,7 +210,8 @@ M.setup = function(user_config)
     false
   )
 
-  util.log([[migration required
+  util.log(
+    [[migration required
 
 Before:
   require('import-cost').setup({ ... })
@@ -221,7 +222,9 @@ After:
     -- ... other options
   }
 
-Dependencies now install automatically on first use.]], vim.log.levels.WARN)
+Dependencies now install automatically on first use.]],
+    vim.log.levels.WARN
+  )
 
   if user_config then
     vim.g.import_cost = vim.tbl_deep_extend('force', vim.g.import_cost or {}, user_config)
