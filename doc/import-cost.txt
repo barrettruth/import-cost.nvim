@@ -1,48 +1,49 @@
-*import-cost* *import-cost.txt*
+import-cost                                                    *import-cost.txt*
 
-Author: Barrett Ruth <https://barrettruth.github.io>
+Author: Barrett Ruth <https://barrettruth.com>
 Homepage: <https://github.com/barrettruth/import-cost.nvim>
 
 ===============================================================================
 INTRODUCTION                                                 *import-cost.nvim*
 
-import-cost.nvim displays the costs of javascript imports inside neovim.
-It works with ES6 and CommonJS modules in any javascript, javascriptreact,
-typescript, or typescriptreact files.
-
-Author: Barrett Ruth <https://barrettruth.com>
+import-cost.nvim displays the costs of JavaScript imports inside Neovim.
+It works with ES6 and CommonJS modules in JavaScript, TypeScript, and Svelte
+files.
 
 ===============================================================================
-SETUP                                                     *import-cost.setup()*
->lua
-    require('import-cost').setup(config)
-<
-Parameters: ~
+CONFIGURATION                                             *import-cost.config*
 
-    {config} `(table | nil)`: (Optional) table containing configuration for
-                            import-cost. Defaults shown below.
-
-Usage: ~
+Configure via `vim.g.import_cost` before the plugin loads:
 >lua
-    require('import-cost').setup({
-        -- Filetypes to attach to
+    vim.g.import_cost = {
         filetypes = {
             'javascript',
             'javascriptreact',
             'typescript',
             'typescriptreact',
+            'svelte',
         },
         format = {
-            -- Format string for bytes/kilobytes in virtual text
             byte_format = '%.1fb',
             kb_format = '%.1fk',
-            -- Virtual text format (remove second "%s" to ignore gzipped size)
             virtual_text = '%s (gzipped: %s)',
         },
-        -- Highlight of virtual text —
-        -- a highlight group to link to or table as specified by nvim_set_hl()
         highlight = 'Comment',
-    })
+    }
 <
+Options: ~
+
+    {filetypes}  `(string[])`: Filetypes to attach to.
+
+    {format}     `(table)`: Format options for virtual text.
+        {byte_format}    `(string)`: Format for bytes.
+        {kb_format}      `(string)`: Format for kilobytes.
+        {virtual_text}   `(string)`: Virtual text format. Use %s placeholders
+                                   for size and gzipped size.
+
+    {highlight}  `(string|table)`: Highlight for virtual text. Can be a
+                                 highlight group name or a table for
+                                 |nvim_set_hl()|.
+
 -------------------------------------------------------------------------------
-vim:tw=80:ts=8:ft=help:
+vim:tw=80:ft=help:

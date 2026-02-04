@@ -1,58 +1,52 @@
 # import-cost.nvim
 
-Display the costs of javascript imports inside neovim with the power of
+Display the costs of JavaScript imports inside Neovim with the power of
 [import-cost](https://github.com/wix/import-cost/tree/master/packages/import-cost).
 
 ![preview](https://user-images.githubusercontent.com/62671086/210295248-916a8d81-22c9-432a-87fd-cf539879bf0c.png)
 
 ## Installation
 
-1. Install regularly with your neovim package manager
-    - *NOTE*: pnpm is not supported because [import-cost](https://github.com/wix/import-cost) does not.
-3. Run `install.sh` with your node.js package manager to setup import-cost:
+Install using your package manager of choice or via [luarocks](https://luarocks.org/modules/barrettruth/import-cost.nvim):
+
+```
+luarocks install import-cost.nvim
+```
+
+After installing, run the install script with your node.js package manager:
 
 ```sh
-sh install.sh '<your-package-manager>'
+sh install.sh yarn  # or npm
 ```
 
-For example, a config with [yarn](https://yarnpkg.com/) and [lazy.nvim](https://github.com/folke/lazy.nvim)
-may look like the following:
-
-```lua
-require('lazy').setup {
-    {
-        'barrettruth/import-cost.nvim',
-        build = 'sh install.sh yarn',
-        -- if on windows
-        -- build = 'pwsh install.ps1 yarn',
-        config = true
-    }
-}
-```
+Note: pnpm is not supported due to [import-cost limitations](https://github.com/wix/import-cost).
 
 ## Configuration
 
-Configure via the setup function (or use the defaults with no arguments):
+Configure via `vim.g.import_cost` before the plugin loads:
 
 ```lua
-require('import-cost').setup(opts)
+vim.g.import_cost = {
+  filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'svelte' },
+  format = {
+    byte_format = '%.1fb',
+    kb_format = '%.1fk',
+    virtual_text = '%s (gzipped: %s)',
+  },
+  highlight = 'Comment',
+}
 ```
 
-See `:h import-cost` for more information
+See `:help import-cost` for more information.
 
 ## Known Issues
 
-1. CommonJS support is particularly flaky - some packages work, some dont (this
-   is by virtue of the [npm module](https://github.com/wix/import-cost/), and,
-   thus, unavoidable)
-2. Long wait times - once again, the npm module may take quite a while before
-   fully parsing packages
+1. CommonJS support is flaky due to the underlying npm module
+2. Long wait times for some packages
 3. [pnpm problems](https://github.com/barrettruth/import-cost.nvim/issues/5)
 
-## Acknowledgements
+## Documentation
 
-1. [wix/import-cost](https://github.com/wix/import-cost/): provides the node
-   backend that calculates the import costs
-2. [import-cost](https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost):
-   the original VSCode plugin that started it all
-3. [vim-import-cost](https://github.com/yardnsm/vim-import-cOst): inspired me to do it in neovim!
+```vim
+:help import-cost.nvim
+```
