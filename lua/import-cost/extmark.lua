@@ -3,8 +3,12 @@ local M = {}
 local ic, job, util =
   require('import-cost'), require('import-cost.job'), require('import-cost.util')
 
+---@type table<integer, table<string, table>>
 local cache = {}
 
+---@param bufnr integer
+---@param data table
+---@param extmark_id integer
 local function update_cache(bufnr, data, extmark_id)
   if not cache[bufnr] then
     cache[bufnr] = {}
@@ -14,6 +18,8 @@ local function update_cache(bufnr, data, extmark_id)
   cache[bufnr][data.string].extmark_id = extmark_id
 end
 
+---@param bufnr integer
+---@param data table
 local function set_extmark(bufnr, data)
   local string = util.normalize_string(data.string)
 
@@ -26,6 +32,7 @@ local function set_extmark(bufnr, data)
   update_cache(bufnr, data, extmark_id)
 end
 
+---@param bufnr integer
 function M.set_extmarks(bufnr)
   local path = vim.api.nvim_buf_get_name(bufnr)
   local filetype = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
@@ -54,6 +61,7 @@ function M.set_extmarks(bufnr)
   job.send_buf_contents(job_id, bufnr)
 end
 
+---@param bufnr integer
 function M.clear_extmarks(bufnr)
   if cache[bufnr] then
     cache[bufnr] = nil
@@ -62,6 +70,7 @@ function M.clear_extmarks(bufnr)
   vim.api.nvim_buf_clear_namespace(bufnr, ic.ns_id, 0, -1)
 end
 
+---@param bufnr integer
 function M.delete_extmarks(bufnr)
   if not cache[bufnr] then
     return

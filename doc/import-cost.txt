@@ -1,9 +1,9 @@
-*import-cost* *import-cost.txt*
+*import-cost.txt*            Import cost display for Neovim
 
-Author: Barrett Ruth <https://barrettruth.com>
-Homepage: <https://github.com/barrett-ruth/import-cost.nvim>
+Author:  Barrett Ruth <https://barrettruth.com>
+License: Same terms as Vim itself (see |license|)
 
-===============================================================================
+==============================================================================
 INTRODUCTION                                                 *import-cost.nvim*
 
 import-cost.nvim displays the costs of javascript imports inside neovim.
@@ -12,38 +12,53 @@ typescript, typescriptreact, or svelte files.
 
 Dependencies are installed automatically on first use.
 
-===============================================================================
-CONFIGURATION                                             *vim.g.import_cost*
+==============================================================================
+CONFIGURATION                                              *vim.g.import_cost*
 
-Configure import-cost via the `vim.g.import_cost` global:
+Configuration is done via `vim.g.import_cost`. Set this before using the
+plugin:
 
 >lua
     vim.g.import_cost = {
-        -- Node package manager for installing dependencies
-        -- Options: 'npm', 'yarn', 'bun' (pnpm not supported)
-        package_manager = 'npm',
-
-        -- Filetypes to attach to
-        filetypes = {
-            'javascript',
-            'javascriptreact',
-            'typescript',
-            'typescriptreact',
-            'svelte',
-        },
-
-        format = {
-            -- Format string for bytes/kilobytes in virtual text
-            byte_format = '%.1fb',
-            kb_format = '%.1fk',
-            -- Virtual text format (remove second "%s" to ignore gzipped size)
-            virtual_text = '%s (gzipped: %s)',
-        },
-
-        -- Highlight of virtual text —
-        -- a highlight group to link to or table as specified by nvim_set_hl()
-        highlight = 'Comment',
+      package_manager = 'npm',
+      filetypes = {
+        'javascript',
+        'javascriptreact',
+        'typescript',
+        'typescriptreact',
+        'svelte',
+      },
+      format = {
+        byte_format = '%.1fb',
+        kb_format = '%.1fk',
+        virtual_text = '%s (gzipped: %s)',
+      },
+      highlight = 'Comment',
     }
 <
--------------------------------------------------------------------------------
-vim:tw=80:ts=8:ft=help:
+                                                        *import-cost.Config*
+    Fields: ~
+        {package_manager}  (string, default: 'npm') Node package manager for
+                           installing dependencies.
+                           Options: 'npm', 'yarn', 'bun' (pnpm not supported)
+        {filetypes}        (string[], default: see below) Filetypes to attach
+                           the plugin to automatically.
+                           Default: { 'javascript', 'javascriptreact',
+                                      'typescript', 'typescriptreact', 'svelte' }
+        {format}           (|import-cost.Format|) Format strings for virtual text.
+        {highlight}        (string|table, default: 'Comment') Virtual text
+                           highlight. Either a highlight group name to link to,
+                           or a table as specified by |nvim_set_hl()|.
+
+                                                        *import-cost.Format*
+    Fields: ~
+        {byte_format}      (string, default: '%.1fb') Format string for byte
+                           sizes. Uses |string.format()| syntax.
+        {kb_format}        (string, default: '%.1fk') Format string for
+                           kilobyte sizes.
+        {virtual_text}     (string, default: '%s (gzipped: %s)') Virtual text
+                           format. First %s is size, second is gzipped size.
+                           Remove second %s to hide gzipped size.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
