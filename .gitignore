@@ -3,3 +3,8 @@ doc/tags
 .*cache*
 CLAUDE.md
 .claude/
+
+.direnv/
+.envrc
+result
+result-*
