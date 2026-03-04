@@ -13,9 +13,12 @@
       ...
     }:
     let
-      forEachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
+      forEachSystem =
+        f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
     in
     {
+      formatter = forEachSystem (pkgs: pkgs.nixfmt-tree);
+
       devShells = forEachSystem (pkgs: {
         default = pkgs.mkShell {
           packages = [
