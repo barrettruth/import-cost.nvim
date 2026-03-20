@@ -4,10 +4,10 @@ Author:  Barrett Ruth <https://barrettruth.com>
 License: Same terms as Vim itself (see |license|)
 
 ==============================================================================
-INTRODUCTION                                                 *import-cost.nvim*
+INTRODUCTION                                                *import-cost.nvim*
 
-import-cost.nvim displays the costs of javascript imports inside neovim.
-It works with ES6 and CommonJS modules in javascript, javascriptreact,
+import-cost.nvim displays the costs of javascript imports inside neovim. It
+works with ES6 and CommonJS modules in javascript, javascriptreact,
 typescript, typescriptreact, or svelte files.
 
 Dependencies are installed automatically on first use.
@@ -36,7 +36,7 @@ plugin:
       highlight = 'Comment',
     }
 <
-                                                        *import-cost.Config*
+                                                          *import-cost.Config*
     Fields: ~
         {package_manager}  (string, default: 'npm') Node package manager for
                            installing dependencies.
@@ -50,7 +50,7 @@ plugin:
                            highlight. Either a highlight group name to link to,
                            or a table as specified by |nvim_set_hl()|.
 
-                                                        *import-cost.Format*
+                                                          *import-cost.Format*
     Fields: ~
         {byte_format}      (string, default: '%.1fb') Format string for byte
                            sizes. Uses |string.format()| syntax.
