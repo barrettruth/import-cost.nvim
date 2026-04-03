@@ -1,10 +1,10 @@
-*import-cost.txt*            Import cost display for Neovim
+*import-cost.nvim.txt*            Import cost display for Neovim
 
-Author:  Barrett Ruth <https://barrettruth.com>
-License: Same terms as Vim itself (see |license|)
+Author:  Barrett Ruth <https://barrettruth.com> License: Same terms as Vim
+itself (see |license|)
 
 ==============================================================================
-INTRODUCTION                                                *import-cost.nvim*
+INTRODUCTION                                  *import-cost* *import-cost.nvim*
 
 import-cost.nvim displays the costs of javascript imports inside neovim. It
 works with ES6 and CommonJS modules in javascript, javascriptreact,
