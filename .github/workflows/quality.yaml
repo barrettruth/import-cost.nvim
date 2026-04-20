@@ -1,6 +1,7 @@
 name: quality
 
 on:
+  workflow_call:
   pull_request:
     branches: [main]
   push:
@@ -8,4 +9,12 @@ on:
 
 jobs:
   quality:
-    uses: ./.github/workflows/ci.yaml
+    name: Quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+      - name: Format
+        run: nix develop .#ci --command just format
+      - name: Lint
+        run: nix develop .#ci --command just lint
