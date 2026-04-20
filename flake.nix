@@ -24,6 +24,7 @@
       devShells = forEachSystem (pkgs: {
         default = pkgs.mkShell {
           packages = [
+            pkgs.just
             pkgs.prettier
             pkgs.stylua
             pkgs.neovim
@@ -35,6 +36,7 @@
 
         ci = pkgs.mkShell {
           packages = [
+            pkgs.just
             pkgs.prettier
             pkgs.stylua
             pkgs.neovim
