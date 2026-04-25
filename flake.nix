@@ -23,7 +23,7 @@
         default = pkgs.mkShell {
           packages = [
             pkgs.just
-            pkgs.prettier
+            pkgs.biome
             pkgs.stylua
             pkgs.neovim
             pkgs.selene
@@ -35,7 +35,7 @@
         ci = pkgs.mkShell {
           packages = [
             pkgs.just
-            pkgs.prettier
+            pkgs.biome
             pkgs.stylua
             pkgs.neovim
             pkgs.selene
