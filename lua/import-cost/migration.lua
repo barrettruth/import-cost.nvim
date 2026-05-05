@@ -8,6 +8,7 @@
 ---@field session_key string
 
 local M = {}
+local util = require('import-cost.util')
 
 ---@type string
 local marker_name = 'github-source-migration-v1'
@@ -120,7 +121,8 @@ function M.warn_if_github_source(root)
 
   vim.notify(
     (
-      "[import-cost.nvim]: Due to GitHub's historic unreliability, development "
+      util.prefix
+      .. "Due to GitHub's historic unreliability, development "
       .. 'has moved to Forgejo. See %s to optionally update your plugin '
       .. 'source configuration. This is a one-time warning.'
     ):format(migration_help),
