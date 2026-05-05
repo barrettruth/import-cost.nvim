@@ -1,6 +1,6 @@
 local M = {}
 
-M.prefix = '[import-cost.nvim]: '
+M.prefix = '[import-cost]: '
 
 ---@param msg string
 ---@param level? integer
