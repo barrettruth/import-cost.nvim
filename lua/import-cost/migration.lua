@@ -119,10 +119,9 @@ function M.warn_if_github_source(root)
   vim.g[session_key] = true
   touch_marker(marker)
 
-  vim.notify(
+  util.log(
     (
-      util.prefix
-      .. "Due to GitHub's historic unreliability, development "
+      "Due to GitHub's historic unreliability, development "
       .. 'has moved to Forgejo. See %s to optionally update your plugin '
       .. 'source configuration. This is a one-time warning.'
     ):format(migration_help),

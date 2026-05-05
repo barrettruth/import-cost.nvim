@@ -1,11 +1,11 @@
 local M = {}
 
-M.prefix = '[import-cost]: '
+local prefix = '[import-cost]: '
 
 ---@param msg string
 ---@param level? integer
 function M.log(msg, level)
-  vim.notify(M.prefix .. msg, level or vim.log.levels.INFO)
+  vim.notify(prefix .. msg, level or vim.log.levels.INFO)
 end
 
 ---@param string string
