@@ -1,7 +1,14 @@
 *import-cost.nvim.txt*            Import cost display for Neovim
 
-Author:  Barrett Ruth <https://barrettruth.com> License: Same terms as Vim
-itself (see |license|)
+Author:  Barrett Ruth <br@barrettruth.com> License: GPL-3.0
+
+==============================================================================
+CONTENTS                                                *import-cost-contents*
+
+  1. Introduction ........................................ |import-cost.nvim|
+  2. Setup ................................................ |import-cost-setup|
+  3. Migration ............................ |import-cost.nvim-migration|
+  4. Configuration ....................................... |import-cost-config|
 
 ==============================================================================
 INTRODUCTION                                  *import-cost* *import-cost.nvim*
@@ -13,7 +20,39 @@ typescript, typescriptreact, or svelte files.
 Dependencies are installed automatically on first use.
 
 ==============================================================================
-CONFIGURATION                                              *vim.g.import_cost*
+SETUP                                                      *import-cost-setup*
+
+With vim.pack (Neovim 0.12+): >lua
+    vim.pack.add({
+      'https://git.barrettruth.com/barrettruth/import-cost.nvim',
+    })
+< With luarocks: >sh
+    luarocks install import-cost.nvim
+< Dependencies are installed automatically on first use. For customization,
+see |import-cost-config|.
+
+==============================================================================
+MIGRATION                                         *import-cost.nvim-migration*
+
+Due to GitHub's historic unreliability, development, issues, and pull requests
+have moved to: >
+    https://git.barrettruth.com/barrettruth/import-cost.nvim
+<
+Use Forgejo for documentation, issues, pull requests, and active development.
+
+For vim.pack (Neovim 0.12+): >lua
+    vim.pack.add({
+      'https://git.barrettruth.com/barrettruth/import-cost.nvim',
+    })
+< For package managers that accept an explicit source URL, replace GitHub
+shorthand with: >
+    https://git.barrettruth.com/barrettruth/import-cost.nvim
+<
+If you prefer not to change the source URL immediately, pin a commit in your
+package manager for repeatable installs.
+
+==============================================================================
+CONFIGURATION                         *vim.g.import_cost* *import-cost-config*
 
 Configuration is done via `vim.g.import_cost`. Set this before using the
 plugin:
