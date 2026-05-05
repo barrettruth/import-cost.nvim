@@ -4,8 +4,9 @@ Display javascript import costs inside neovim, powered by
 [import-cost](https://github.com/wix/import-cost).
 
 > [!NOTE]
-> Due to GitHub's historic unreliability, development, issues, and pull requests
-> have moved to [Forgejo](https://git.barrettruth.com/barrettruth/import-cost.nvim).
+> Due to GitHub's historic unreliability, active development is hosted on
+> [Forgejo](https://git.barrettruth.com/barrettruth/import-cost.nvim).
+> GitHub is maintained as a read-only mirror.
 > See `:help import-cost.nvim-migration` to optionally update your plugin source
 > configuration.
 
