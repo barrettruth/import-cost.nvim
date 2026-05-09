@@ -13,7 +13,7 @@ local util = require('import-cost.util')
 ---@type string
 local marker_name = 'github-source-migration-v1'
 ---@type string
-local migration_help = ':help import-cost.nvim-migration'
+local migration_help = ':help import-cost-migration'
 ---@type string
 local session_key = 'import_cost_github_source_migration_warned'
 

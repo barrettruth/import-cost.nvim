@@ -7,7 +7,7 @@ Display javascript import costs inside neovim, powered by
 > Due to GitHub's historic unreliability, active development is hosted on
 > [Forgejo](https://git.barrettruth.com/barrettruth/import-cost.nvim).
 > GitHub is maintained as a read-only mirror.
-> See `:help import-cost.nvim-migration` to optionally update your plugin source
+> See `:help import-cost-migration` to optionally update your plugin source
 > configuration.
 
 ![preview](https://user-images.githubusercontent.com/62671086/210295248-916a8d81-22c9-432a-87fd-cf539879bf0c.png)
@@ -31,10 +31,28 @@ luarocks install import-cost.nvim
 
 Dependencies are installed automatically on first use.
 
+## Quick Start
+
+Open a JavaScript, TypeScript, or Svelte file with import statements and wait
+for inline virtual text costs to appear.
+
+If the defaults need changing, set `vim.g.import_cost` before the plugin
+loads.
+
+```lua
+vim.g.import_cost = {
+  package_manager = 'yarn',
+  format = {
+    virtual_text = '%s',
+  },
+  highlight = 'Comment',
+}
+```
+
 ## Documentation
 
 ```vim
-:help import-cost.nvim
+:help import-cost
 ```
 
 ## Known Issues

@@ -18,7 +18,7 @@ For new behavior, open an issue first unless the change is small and already
 fits the project's scope.
 
 Behavior or configuration changes should update `README.md` and
-`doc/import-cost.nvim.txt` when appropriate.
+`doc/import-cost.txt` when appropriate.
 
 ## Development
 

@@ -1,14 +1,15 @@
-*import-cost.nvim.txt*            Import cost display for Neovim
+*import-cost.txt* *import-cost.nvim.txt*  Import cost display for Neovim
 
 Author:  Barrett Ruth <br@barrettruth.com> License: GPL-3.0
 
 ==============================================================================
 CONTENTS                                                *import-cost-contents*
 
-  1. Introduction ........................................ |import-cost.nvim|
-  2. Setup ................................................ |import-cost-setup|
-  3. Migration ............................ |import-cost.nvim-migration|
-  4. Configuration ....................................... |import-cost-config|
+  1. Introduction .............................................. |import-cost|
+  2. Quick Start .................................... |import-cost-quickstart|
+  3. Setup ............................................... |import-cost-setup|
+  4. Migration ....................................... |import-cost-migration|
+  5. Configuration ...................................... |import-cost-config|
 
 ==============================================================================
 INTRODUCTION                                  *import-cost* *import-cost.nvim*
@@ -19,6 +20,29 @@ typescript, typescriptreact, or svelte files.
 
 Dependencies are installed automatically on first use.
 
+==============================================================================
+QUICK START                                           *import-cost-quickstart*
+
+Add the plugin from Forgejo. import-cost.nvim installs its backend
+dependencies automatically the first time it attaches to a supported buffer.
+Use vim.pack to add it: >lua
+    vim.pack.add({
+      'https://git.barrettruth.com/barrettruth/import-cost.nvim',
+    })
+< Open a JavaScript, TypeScript, or Svelte file with import statements. The
+plugin attaches automatically and shows inline virtual text costs when
+analysis finishes.
+
+Set `vim.g.import_cost` before the plugin loads if your project needs a
+different package manager, virtual text format, or highlight group: >lua
+    vim.g.import_cost = {
+      package_manager = 'yarn',
+      format = {
+        virtual_text = '%s',
+      },
+      highlight = 'Comment',
+    }
+<
 ==============================================================================
 SETUP                                                      *import-cost-setup*
 
@@ -32,7 +56,8 @@ With vim.pack (Neovim 0.12+): >lua
 see |import-cost-config|.
 
 ==============================================================================
-MIGRATION                                         *import-cost.nvim-migration*
+MIGRATION                                              *import-cost-migration*
+                                                  *import-cost.nvim-migration*
 
 Due to GitHub's historic unreliability, development, issues, and pull requests
 have moved to: >
