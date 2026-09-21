@@ -3,12 +3,12 @@ package = 'import-cost.nvim'
 version = 'scm-1'
 
 source = {
-  url = 'git+https://git.barrettruth.com/barrettruth/import-cost.nvim.git',
+  url = 'git+https://forge.barrettruth.com/barrettruth/import-cost.nvim.git',
 }
 
 description = {
   summary = 'Display JavaScript import costs inside Neovim',
-  homepage = 'https://git.barrettruth.com/barrettruth/import-cost.nvim',
+  homepage = 'https://forge.barrettruth.com/barrettruth/import-cost.nvim',
   license = 'GPL-3.0',
 }
 

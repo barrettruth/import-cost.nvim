@@ -1,7 +1,7 @@
 # Contributing
 
 Development, issues, and pull requests happen on
-[Forgejo](https://git.barrettruth.com/barrettruth/import-cost.nvim).
+[Forgejo](https://forge.barrettruth.com/barrettruth/import-cost.nvim).
 
 ## Scope
 

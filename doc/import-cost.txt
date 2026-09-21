@@ -27,7 +27,7 @@ Add the plugin from Forgejo. import-cost.nvim installs its backend
 dependencies automatically the first time it attaches to a supported buffer.
 Use vim.pack to add it: >lua
     vim.pack.add({
-      'https://git.barrettruth.com/barrettruth/import-cost.nvim',
+      'https://forge.barrettruth.com/barrettruth/import-cost.nvim',
     })
 < Open a JavaScript, TypeScript, or Svelte file with import statements. The
 plugin attaches automatically and shows inline virtual text costs when
@@ -48,7 +48,7 @@ SETUP                                                      *import-cost-setup*
 
 With vim.pack (Neovim 0.12+): >lua
     vim.pack.add({
-      'https://git.barrettruth.com/barrettruth/import-cost.nvim',
+      'https://forge.barrettruth.com/barrettruth/import-cost.nvim',
     })
 < With luarocks: >sh
     luarocks install import-cost.nvim
@@ -61,17 +61,17 @@ MIGRATION                                              *import-cost-migration*
 
 Due to GitHub's historic unreliability, development, issues, and pull requests
 have moved to: >
-    https://git.barrettruth.com/barrettruth/import-cost.nvim
+    https://forge.barrettruth.com/barrettruth/import-cost.nvim
 <
 Use Forgejo for documentation, issues, pull requests, and active development.
 
 For vim.pack (Neovim 0.12+): >lua
     vim.pack.add({
-      'https://git.barrettruth.com/barrettruth/import-cost.nvim',
+      'https://forge.barrettruth.com/barrettruth/import-cost.nvim',
     })
 < For package managers that accept an explicit source URL, replace GitHub
 shorthand with: >
-    https://git.barrettruth.com/barrettruth/import-cost.nvim
+    https://forge.barrettruth.com/barrettruth/import-cost.nvim
 <
 If you prefer not to change the source URL immediately, pin a commit in your
 package manager for repeatable installs.
