@@ -3,10 +3,6 @@
 Display javascript import costs inside neovim, powered by
 [import-cost](https://github.com/wix/import-cost).
 
-> [!NOTE]
-> Active development is hosted on
-> [Forgejo](https://forge.barrettruth.com/barrettruth/import-cost.nvim).
-
 ![import-cost.nvim](assets/import-cost.webp)
 
 ## Installation
