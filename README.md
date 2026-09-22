@@ -20,12 +20,6 @@ vim.pack.add({
 ```
 
 Or via
-[luarocks](https://luarocks.org/modules/barrettruth/import-cost.nvim):
-
-```
-luarocks install import-cost.nvim
-```
-
 Dependencies are installed automatically on first use.
 
 ## Quick Start

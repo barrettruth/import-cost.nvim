@@ -50,8 +50,6 @@ With vim.pack (Neovim 0.12+): >lua
     vim.pack.add({
       'https://forge.barrettruth.com/barrettruth/import-cost.nvim',
     })
-< With luarocks: >sh
-    luarocks install import-cost.nvim
 < Dependencies are installed automatically on first use. For customization,
 see |import-cost-config|.
 
