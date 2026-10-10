@@ -34,31 +34,35 @@ function M.plugin_root()
 end
 
 ---@param root string
----@return string|nil
-function M.origin(root)
+---@param callback fun(origin: string)
+---@return nil
+function M.origin(root, callback)
   if vim.fn.executable('git') ~= 1 then
-    return nil
+    return
   end
 
-  local ok, origin =
-    pcall(vim.fn.system, { 'git', '-C', root, 'config', '--get', 'remote.origin.url' })
-  if not ok or vim.v.shell_error ~= 0 then
-    return nil
-  end
-
-  return vim.trim(origin)
+  pcall(
+    vim.system,
+    { 'git', '-C', root, 'config', '--get', 'remote.origin.url' },
+    { text = true },
+    function(result)
+      if result.code == 0 and result.stdout then
+        callback(vim.trim(result.stdout))
+      end
+    end
+  )
 end
 
 ---@param root? string
----@return boolean
+---@return nil
 function M.warn_if_github_source(root)
-  if not M.is_github_origin(M.origin(root or M.plugin_root())) then
-    return false
-  end
-
-  vim.notify_once(message, vim.log.levels.WARN)
-
-  return true
+  M.origin(root or M.plugin_root(), function(origin)
+    if M.is_github_origin(origin) then
+      vim.schedule(function()
+        vim.notify_once(message, vim.log.levels.WARN)
+      end)
+    end
+  end)
 end
 
 return M

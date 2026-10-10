@@ -30,18 +30,7 @@
             pkgs.lua-language-server
             pkgs.vimdoc-language-server
           ];
-        };
-
-        ci = pkgs.mkShell {
-          packages = [
-            pkgs.just
-            pkgs.biome
-            pkgs.stylua
-            pkgs.neovim
-            pkgs.selene
-            pkgs.lua-language-server
-            pkgs.vimdoc-language-server
-          ];
+          VIMRUNTIME = "${pkgs.neovim}/share/nvim/runtime";
         };
       });
     };
