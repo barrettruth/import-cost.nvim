@@ -28,7 +28,6 @@
             pkgs.neovim
             pkgs.selene
             pkgs.lua-language-server
-            pkgs.vimdoc-language-server
           ];
           VIMRUNTIME = "${pkgs.neovim}/share/nvim/runtime";
         };
