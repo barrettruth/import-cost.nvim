@@ -8,8 +8,7 @@ CONTENTS                                                *import-cost-contents*
   1. Introduction .............................................. |import-cost|
   2. Quick Start .................................... |import-cost-quickstart|
   3. Setup ............................................... |import-cost-setup|
-  4. Migration ....................................... |import-cost-migration|
-  5. Configuration ...................................... |import-cost-config|
+  4. Configuration ...................................... |import-cost-config|
 
 ==============================================================================
 INTRODUCTION                                  *import-cost* *import-cost.nvim*
@@ -23,11 +22,11 @@ Dependencies are installed automatically on first use.
 ==============================================================================
 QUICK START                                           *import-cost-quickstart*
 
-Add the plugin from Forgejo. import-cost.nvim installs its backend
+Add the plugin from GitHub. import-cost.nvim installs its backend
 dependencies automatically the first time it attaches to a supported buffer.
 Use vim.pack to add it: >lua
     vim.pack.add({
-      'https://forge.barrettruth.com/barrettruth/import-cost.nvim',
+      'https://github.com/barrettruth/import-cost.nvim',
     })
 < Open a JavaScript, TypeScript, or Svelte file with import statements. The
 plugin attaches automatically and shows inline virtual text costs when
@@ -48,26 +47,10 @@ SETUP                                                      *import-cost-setup*
 
 With vim.pack (Neovim 0.12+): >lua
     vim.pack.add({
-      'https://forge.barrettruth.com/barrettruth/import-cost.nvim',
+      'https://github.com/barrettruth/import-cost.nvim',
     })
 < Dependencies are installed automatically on first use. For customization,
 see |import-cost-config|.
-
-==============================================================================
-MIGRATION                                              *import-cost-migration*
-                                                  *import-cost.nvim-migration*
-
-import-cost.nvim will be removed from GitHub on October 31, 2026. Update your
-plugin source to Forgejo: >lua
-    vim.pack.add({
-      'https://forge.barrettruth.com/barrettruth/import-cost.nvim',
-    })
-< For package managers that accept an explicit source URL, replace the GitHub
-shorthand with: >
-    https://forge.barrettruth.com/barrettruth/import-cost.nvim
-<
-If you prefer not to change the source URL immediately, pin a commit in your
-package manager for repeatable installs.
 
 ==============================================================================
 CONFIGURATION                         *vim.g.import_cost* *import-cost-config*

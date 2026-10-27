@@ -3,7 +3,7 @@
 Display javascript import costs inside neovim, powered by
 [import-cost](https://github.com/wix/import-cost).
 
-![import-cost.nvim](https://forge.barrettruth.com/attachments/af2ecb25-e4eb-4535-af0b-0be3b75b5f5f)
+![import-cost.nvim](https://user-images.githubusercontent.com/62671086/210295248-916a8d81-22c9-432a-87fd-cf539879bf0c.png)
 
 ## Installation
 
@@ -11,11 +11,10 @@ With `vim.pack` (Neovim 0.12+):
 
 ```lua
 vim.pack.add({
-  'https://forge.barrettruth.com/barrettruth/import-cost.nvim',
+  'https://github.com/barrettruth/import-cost.nvim',
 })
 ```
 
-Or via
 Dependencies are installed automatically on first use.
 
 ## Quick Start
@@ -46,7 +45,7 @@ vim.g.import_cost = {
 
 1. CommonJS support is flaky (limitation of the npm module)
 2. Long wait times for large packages
-3. [pnpm is not supported](https://forge.barrettruth.com/barrettruth/import-cost.nvim/issues/5)
+3. pnpm is not supported
 
 ## Acknowledgements
 
