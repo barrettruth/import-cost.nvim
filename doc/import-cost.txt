@@ -1,6 +1,6 @@
 *import-cost.txt* *import-cost.nvim.txt*  Import cost display for Neovim
 
-Author:  Barrett Ruth <br@barrettruth.com> License: GPL-3.0
+Author:  Barrett Ruth <br@barrettruth.com> License: ISC
 
 ==============================================================================
 CONTENTS                                                *import-cost-contents*
